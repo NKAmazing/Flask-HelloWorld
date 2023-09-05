@@ -1,0 +1,6 @@
+version: '3.3'
+
+services:
+  hello:
+    image: flask_project:v1.0.0
+    restart: always
