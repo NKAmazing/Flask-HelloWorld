@@ -2,7 +2,7 @@ name: GitHub Actions Flask-HelloWorld
 
 env:
     REPO_NAME: ${{ github.event.repository.name }}
-    IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/flask_project:{${{ github.sha }}}
+    IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/flask_project:v1.0.0
 
 on:
     workflow_dispatch:
@@ -27,5 +27,5 @@ jobs:
                     ecr: 'false'
                     logout: 'true'
             - run: |
-                docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME:v1.0.0
-                docker push ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME:v1.0.0
+                docker build . -t ${{ env.IMAGE_NAME }}
+                docker push ${{ env.IMAGE_NAME }}
