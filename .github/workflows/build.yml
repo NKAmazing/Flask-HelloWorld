@@ -27,5 +27,5 @@ jobs:
                     ecr: 'false'
                     logout: 'true'
             - run: |
-                docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME{${{ github.sha }}}
-                docker push ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME{${{ github.sha }}}
+                docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME:v1.0.0
+                docker push ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE_NAME:v1.0.0
