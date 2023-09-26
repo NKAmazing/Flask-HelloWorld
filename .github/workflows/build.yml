@@ -56,6 +56,6 @@ jobs:
                 cpu: 1
                 memory: 1
 
-            - name: 'logout'
+            - name: 'Logout'
               run: |
                 az logout
