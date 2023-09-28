@@ -46,7 +46,7 @@ jobs:
               uses: azure/aci-deploy@v1
               with:
                 location: ${{ secrets.LOCATION }}
-                name: Flask-HelloWorld
+                name: flask-helloworld
                 resource-group: ${{ secrets.RESOURCE_GROUP }}
                 image: ${{ env.IMAGE_NAME }}
                 dns-name-label: ${{ env.DNS_NAME }}
