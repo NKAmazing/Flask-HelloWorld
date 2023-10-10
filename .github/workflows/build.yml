@@ -5,6 +5,8 @@ env:
     IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/flask_project
     DNS_NAME: flask-helloworld-${{ github.run_id }}-${{ github.run_attempt }}
     IMAGE_VERSION: ${{ github.sha }}
+    OTEL_SERVICE_NAME: flask-helloworld
+    OTEL_TRACES_SAMPLER_ARG: 0.1
 
 on:
     push:
@@ -77,6 +79,7 @@ jobs:
                 ports: 5000
                 cpu: 1
                 memory: 1
+                environment-variables: CONNECTION_STRING=${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }} OTEL_SERVICE_NAME=${{ env.OTEL_SERVICE_NAME }} OTEL_TRACES_SAMPLER_ARG=${{ env.OTEL_TRACES_SAMPLER_ARG }}
 
             - name: 'Logout'
               run: |
