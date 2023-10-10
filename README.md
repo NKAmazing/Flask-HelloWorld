@@ -20,8 +20,9 @@ To get the Azure credentials, you need to enter the following command:
 az ad sp create-for-rbac --name service_principal_name --role contributor --scopes /subscriptions/id_suscription --sdk-auth
 ```
 The previous command provides a JSON with the Azure secret credentials.
+
 Note: These credentials are no longer available for review, so it is recommended to copy and save them as a secret variable in the remote GitHub repository. 
-### Pushing Tag with Actions
+## Pushing Tag with Actions
 In order to build and deploy with a tag version in our GitHub Actions Workflow, we need to push first the specific tag version of the project.
 ```bash
 git tag v*.*.* # specific tag version
@@ -30,5 +31,12 @@ git tag v*.*.* # specific tag version
 git push origin v*.*.*
 ```
 After pushing it, we simply have to go to the Actions section and re-run the workflow.
+## Security
+We use Snyk tool to check the workflow security. To achieve this, we use Snyk Token as an Actions Variable.
+To add your token to your variables, you need to do the following steps:
+* Go to [```Snyk-App```](https://app.snyk.io/)
+* Search for ```Account\Settings\General\Auth\```
+* Click on ```click to show``` to reveal the Snyk Token.
+* Go to Actions and add it.
 ## Tools
 ![ShellScript](https://img.shields.io/badge/Shell_Script-43853D?style=for-the-badge&logo=gnu-bash&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Azure](https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white) ![GithubActions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
