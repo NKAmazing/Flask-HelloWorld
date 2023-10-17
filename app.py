@@ -22,11 +22,17 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # Set global TracerProvider before instrumenting
-trace.set_tracer_provider(
-    TracerProvider(
-        resource=Resource.create({SERVICE_NAME: 'flask-helloworld'})
-    )
+# trace.set_tracer_provider(
+#     TracerProvider(
+#         resource=Resource.create({SERVICE_NAME: 'flask-helloworld'})
+#     )
+# )
+
+tracer_provider = TracerProvider(
+    resource=Resource.create({SERVICE_NAME: 'flask-helloworld'})
 )
+
+trace.set_tracer_provider(tracer_provider)
 
 # Configure logging
 # logging.basicConfig(level=logging.DEBUG)
