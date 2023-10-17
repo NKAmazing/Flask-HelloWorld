@@ -35,7 +35,7 @@ app.config.from_object(Config)
 # Set global TracerProvider before instrumenting
 trace.set_tracer_provider(
     TracerProvider(
-        resource=Resource.create({SERVICE_NAME: Config.OTEL_SERVICE_NAME})
+        resource=Resource.create({SERVICE_NAME: 'flask-helloworld'})
     )
 )
 
@@ -55,7 +55,7 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 trace_exporter = AzureMonitorTraceExporter(
-    connection_string=Config.CONNECTION_STRING
+    connection_string='InstrumentationKey=c73b01ac-5294-40a4-8fb4-88085453c928;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/'
 )
 trace.get_tracer_provider().add_span_processor(
     BatchSpanProcessor(trace_exporter)
