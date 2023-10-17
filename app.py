@@ -3,7 +3,6 @@ import sys
 import logging
 
 from flask import Flask
-from .config import Config
 
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
@@ -19,7 +18,7 @@ from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 app = Flask(__name__)
 
 # Load configuration
-app.config.from_object(Config)
+# app.config.from_object(Config)
 
 # Set global TracerProvider before instrumenting
 # trace.set_tracer_provider(
