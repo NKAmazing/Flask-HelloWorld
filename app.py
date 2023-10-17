@@ -3,7 +3,7 @@ import sys
 import logging
 
 from flask import Flask
-from config import Config
+from .config import Config
 
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
