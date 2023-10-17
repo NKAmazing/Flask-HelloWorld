@@ -56,7 +56,7 @@ trace.get_tracer_provider().add_span_processor(
 )
 
 # Import here to avoid circular imports
-from routes import *  # noqa isort:skip
+from . import routes  # noqa isort:skip
 
 if __name__ == "__main__":
     # Run the application
