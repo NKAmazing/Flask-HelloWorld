@@ -3,6 +3,7 @@ import sys
 import logging
 
 from flask import Flask
+from flask import jsonify
 
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
@@ -55,8 +56,10 @@ trace.get_tracer_provider().add_span_processor(
     BatchSpanProcessor(trace_exporter)
 )
 
-# Import here to avoid circular imports
-from . import routes  # noqa isort:skip
+# Import the application views
+@app.route('/')
+def index():
+    return jsonify({'message': 'Hello, World!'})
 
 if __name__ == "__main__":
     # Run the application
