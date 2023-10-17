@@ -3,9 +3,6 @@ import sys
 import logging
 
 from flask import Flask
-from dotenv import load_dotenv
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from config import Config
 
 from opentelemetry import trace
@@ -21,16 +18,8 @@ from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 # Initialize Flask
 app = Flask(__name__)
 
-load_dotenv()
-
-print("Connection String: " + os.getenv("CONNECTION_STRING"))
-print("Service Name: " + os.getenv("OTEL_SERVICE_NAME"))
-print("Sampler Arg: " + os.getenv("OTEL_TRACES_SAMPLER_ARG"))
-
 # Load configuration
 app.config.from_object(Config)
-
-
 
 # Set global TracerProvider before instrumenting
 trace.set_tracer_provider(
@@ -40,13 +29,13 @@ trace.set_tracer_provider(
 )
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
-app_logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.DEBUG)
+# app_logger = logging.getLogger(__name__)
 
 # Log the values of environment variables
-app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {Config.CONNECTION_STRING}")
-app_logger.debug(f"OTEL_SERVICE_NAME: {Config.OTEL_SERVICE_NAME}")
-app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {Config.OTEL_TRACES_SAMPLER_ARG}")
+# app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {Config.CONNECTION_STRING}")
+# app_logger.debug(f"OTEL_SERVICE_NAME: {Config.OTEL_SERVICE_NAME}")
+# app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {Config.OTEL_TRACES_SAMPLER_ARG}")
 
 # Enable tracing for Flask library
 FlaskInstrumentor().instrument_app(app)

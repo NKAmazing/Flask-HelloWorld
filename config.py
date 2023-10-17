@@ -6,7 +6,7 @@ class Config(object):
     '''
     Class to set environment variables
     '''
-
+    
     load_dotenv()
 
     CONNECTION_STRING = os.environ.get('CONNECTION_STRING')
