@@ -36,6 +36,14 @@ tracer_provider = TracerProvider(
 
 trace.set_tracer_provider(tracer_provider)
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+app_logger = logging.getLogger(__name__)
+
+# Log the values of environment variables
+app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {CONNECTION_STRING}")
+app_logger.debug(f"OTEL_SERVICE_NAME: {OTEL_SERVICE_NAME}")
+
 # Enable tracing for Flask library
 FlaskInstrumentor().instrument_app(app)
 
@@ -48,15 +56,6 @@ trace_exporter = AzureMonitorTraceExporter(
 trace.get_tracer_provider().add_span_processor(
     BatchSpanProcessor(trace_exporter)
 )
-
-# Configure logging
-# logging.basicConfig(level=logging.DEBUG)
-# app_logger = logging.getLogger(__name__)
-
-# Log the values of environment variables
-# app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {Config.CONNECTION_STRING}")
-# app_logger.debug(f"OTEL_SERVICE_NAME: {Config.OTEL_SERVICE_NAME}")
-# app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {Config.OTEL_TRACES_SAMPLER_ARG}")
 
 # Import the application views
 @app.route('/')

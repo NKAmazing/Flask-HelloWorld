@@ -79,7 +79,7 @@ jobs:
                 ports: 5000
                 cpu: 1
                 memory: 1
-                environment-variables: OTEL_SERVICE_NAME=${{ env.OTEL_SERVICE_NAME }} OTEL_TRACES_SAMPLER_ARG=${{ env.OTEL_TRACES_SAMPLER_ARG }}
+                environment-variables: OTEL_SERVICE_NAME=${{ env.OTEL_SERVICE_NAME }}
                 secure-environment-variables: CONNECTION_STRING=${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
 
             - name: 'Logout'
