@@ -88,6 +88,19 @@ trace.get_tracer_provider().add_span_processor(
     BatchSpanProcessor(trace_exporter)
 )
 
+# The following code will generate two pieces of exception telemetry that are identical in nature
+try:
+    val = 1 / 0
+    print(val)
+except ZeroDivisionError:
+    logger.exception("Error: Division by zero")
+
+try:
+    val = 1 / 0
+    print(val)
+except ZeroDivisionError:
+    logger.error("Error: Division by zero", stack_info=True, exc_info=True)
+
 # Import the application views
 @app.route('/')
 def index():
