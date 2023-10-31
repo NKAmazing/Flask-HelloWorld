@@ -3,7 +3,6 @@
 # Python imports
 import os
 import sys
-import logging
 from dotenv import load_dotenv
 
 # Flask imports
@@ -18,6 +17,19 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
+
+# Logging imports
+import logging
+from azure.monitor.opentelemetry.exporter import AzureMonitorLogExporter
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+from opentelemetry._logs import (
+    get_logger_provider,
+    set_logger_provider,
+)
+from opentelemetry.sdk._logs import (
+    LoggerProvider,
+    LoggingHandler,
+)
 
 # Initialize Flask
 app = Flask(__name__)
@@ -36,13 +48,34 @@ tracer_provider = TracerProvider(
 
 trace.set_tracer_provider(tracer_provider)
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-app_logger = logging.getLogger(__name__)
+# # Configure logging
+# logging.basicConfig(level=logging.DEBUG)
+# app_logger = logging.getLogger(__name__)
 
-# Log the values of environment variables
-app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {CONNECTION_STRING}")
-app_logger.debug(f"OTEL_SERVICE_NAME: {OTEL_SERVICE_NAME}")
+# # Log the values of environment variables
+# app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {CONNECTION_STRING}")
+# app_logger.debug(f"OTEL_SERVICE_NAME: {OTEL_SERVICE_NAME}")
+
+# Configure logging
+logger_provider = LoggerProvider()
+set_logger_provider(logger_provider)
+exporter = AzureMonitorLogExporter.from_connection_string(
+    connection_string=CONNECTION_STRING
+)
+get_logger_provider().add_log_record_processor(
+    BatchLogRecordProcessor(exporter, schedule_delay_millis=60000)
+)
+
+# Attach LoggingHandler to namespaced logger
+handler = LoggingHandler()
+logger = logging.getLogger(__name__)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+logger.info("Hello, World!")
+
+# Manually flush Telemetry records
+logger_provider.force_flush()
 
 # Enable tracing for Flask library
 FlaskInstrumentor().instrument_app(app)
