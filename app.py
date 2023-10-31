@@ -59,22 +59,24 @@ trace.set_tracer_provider(tracer_provider)
 # Configure logging
 logger_provider = LoggerProvider()
 set_logger_provider(logger_provider)
-exporter = AzureMonitorLogExporter.from_connection_string(
-    connection_string=CONNECTION_STRING
-)
-get_logger_provider().add_log_record_processor(
-    BatchLogRecordProcessor(exporter, schedule_delay_millis=60000)
+
+exporter = AzureMonitorLogExporter(
+    connection_string=os.environ["APPLICATIONINSIGHTS_CONNECTION_STRING"]
 )
 
-# Attach LoggingHandler to namespaced logger
+logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
+
+# Attach LoggingHandler to root logger
 handler = LoggingHandler()
+logging.getLogger().addHandler(handler)
+logging.getLogger().setLevel(logging.NOTSET)
+
 logger = logging.getLogger(__name__)
-logger.addHandler(handler)
-logger.setLevel(logging.INFO)
 
-logger.info("Hello, World!")
+logger.warning("Hello World!")
 
-# Manually flush Telemetry records
+# Telemetry records are flushed automatically upon application exit
+# If you would like to flush records manually yourself, you can call force_flush()
 logger_provider.force_flush()
 
 # Enable tracing for Flask library
