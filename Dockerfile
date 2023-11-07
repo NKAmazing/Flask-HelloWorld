@@ -7,6 +7,8 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY ./app.py /home/app/
+COPY ./main /home/app/main
+COPY ./config.py /home/app/
 
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x /home/app/entrypoint.sh
