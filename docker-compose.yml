@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   hello:
-    image: flask_project:v2.0.14
+    image: flask_project:v2.1.0
     env_file:
       - .env
     ports:
