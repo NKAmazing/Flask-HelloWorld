@@ -48,14 +48,6 @@ tracer_provider = TracerProvider(
 
 trace.set_tracer_provider(tracer_provider)
 
-# # Configure logging
-# logging.basicConfig(level=logging.DEBUG)
-# app_logger = logging.getLogger(__name__)
-
-# # Log the values of environment variables
-# app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {CONNECTION_STRING}")
-# app_logger.debug(f"OTEL_SERVICE_NAME: {OTEL_SERVICE_NAME}")
-
 # Configure logging
 logger_provider = LoggerProvider()
 set_logger_provider(logger_provider)

@@ -9,9 +9,10 @@ env:
     OTEL_TRACES_SAMPLER_ARG: 0.1
 
 on:
-    push:
-        tags: ['v*.*.*']
-        branches: [main]
+  workflow_dispatch:
+  push:
+      tags: ['v*.*.*']
+      branches: [main]
 
 jobs:
     security:
