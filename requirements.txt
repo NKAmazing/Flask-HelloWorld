@@ -4,3 +4,4 @@ azure-monitor-opentelemetry-exporter
 opentelemetry-instrumentation-flask==0.41b0
 opentelemetry-instrumentation-logging==0.41b0
 python-dotenv==1.0.0
+setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
