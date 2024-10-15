@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye AS production
+FROM python:3.12.7-slim-bullseye AS production
 
 WORKDIR /home/app
 
